@@ -34,7 +34,7 @@ async def send_invitation():
     message = MessageSchema(
         subject="User Management API Documentation",
         recipients=recipients,
-        template_body={"github_link": "https://github.com/aniketwdubey/yourrepository"},  # Add your GitHub link here
+        template_body={"github_link": "https://github.com/aniketwdubey/FastAPI-Firestore-User-Management"},  # Add your GitHub link here
         subtype=MessageType.html,
         # attachments=[Path("/path/to/your/screenshot.png")],
     )
