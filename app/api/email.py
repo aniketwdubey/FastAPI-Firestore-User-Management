@@ -31,12 +31,23 @@ router = APIRouter()
 @router.post("/send_invite")
 async def send_invitation():
     recipients = os.getenv("RECIPIENT_EMAILS").split(",")  # Split the string into a list
+
+    image_paths = [
+        (Path(__file__).parent.parent.parent / 'screenshots' / 'image1.png').resolve(),
+        (Path(__file__).parent.parent.parent / 'screenshots' / 'image2.png').resolve(),
+    ]
+
+    # Check if files exist and are readable
+    for path in image_paths:
+        if not path.is_file():
+            raise HTTPException(status_code=400, detail=f"File not found or not readable: {path}")
+
     message = MessageSchema(
         subject="User Management API Documentation",
         recipients=recipients,
         template_body={"github_link": "https://github.com/aniketwdubey/FastAPI-Firestore-User-Management"},  # Add your GitHub link here
         subtype=MessageType.html,
-        # attachments=[Path("/path/to/your/screenshot.png")],
+        attachments=[str(path) for path in image_paths],  # Convert paths to strings
     )
     fm = FastMail(conf)
     await fm.send_message(message, template_name="email_template.html")
