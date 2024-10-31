@@ -1,10 +1,10 @@
+import os
 from unittest import mock
 from google.cloud import firestore
 from app.schemas.user import UserCreate
 
-
-db = firestore.Client.from_service_account_json('/Users/aniketdubey/Downloads/buoyant-ceiling-440212-a6-86758dd7c004.json')
-
+current_dir = os.path.dirname(__file__)
+json_path = os.path.join(current_dir, '../../buoyant-ceiling-440212-a6-86758dd7c004.json')
 
 def create_user(user: UserCreate) -> dict:
     doc_ref = db.collection("users").document()
